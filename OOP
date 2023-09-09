@@ -1,0 +1,15 @@
+from turtle import Turtle, Screen
+
+"create a object from blueprint"
+timmy = Turtle()
+print(timmy)
+
+"call method assosiated with object"
+timmy.shape("turtle")
+timmy.color("coral")
+timmy.forward(100)
+
+"tap in to attribute with object name"
+my_screen = Screen()
+print(my_screen.canvheight)
+my_screen.exitonclick()
