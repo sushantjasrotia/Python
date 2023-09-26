@@ -1,14 +1,47 @@
-import colorgram
+from turtle import Screen
+from snake import Snake
+from food import Food
+from scoreboard import Scoreboard
+import time
 
-rgb_colors = []
-colors = colorgram.extract("image.jpeg", 25)
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")  # screen background color
+screen.title("My Snake Game")
+screen.tracer(0)
 
-for color in colors:
-    r = color.rgb.r
-    g = color.rgb.g
-    b = color.rgb.b
-    new_color = (r, g, b)
-    rgb_colors.append(new_color)
+snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
 
-print(rgb_colors)
-# color_list = [(211, 210, 210), (189, 167, 121), (57, 90, 111), (113, 43, 35), (163, 89, 64), (210, 212, 214), (208, 211, 208), (211, 209, 210), (64, 43, 43), (171, 183, 170), (136, 149, 69), (127, 160, 172), (101, 79, 89), (83, 133, 108), (108, 39, 44), (39, 61, 47), (45, 40, 41), (211, 196, 124), (174, 150, 152), (36, 71, 88), (179, 106, 80), (36, 67, 84), (207, 185, 181), (99, 140, 119), (184, 198, 181)]
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
+
+    #DETECT collison with food
+    if snake.head.distance(food) < 15: #15 is pixle
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
+
+    #Detect collison with wall.
+    if snake.head.xcor() > 280 or snake.head.xcor() <-280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
+
+    #Detect collision with tail.
+    for segment in snake.segments[1:]: #list slice
+         if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
+
+
+
+screen.exitonclick()
