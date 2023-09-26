@@ -1,0 +1,24 @@
+class Animal:
+    def __init__(self):
+        self.num_eyes = 2
+
+    def breathe(self):
+        print("inhale, exhale.")
+
+class Fish(Animal): #fish class inherit super class
+    def __init__(self):
+        super().__init__() #fish class inherit all the element of super class which is Animal class
+
+    def breathe(self): #inherit method
+        super().breathe()
+        print("doing this underwater.") #adding extra funxnality
+
+    def swim(self):
+        print("moving in water.")
+
+nemo = Fish()
+nemo.swim()
+nemo.breathe()
+print(nemo.num_eyes)
+
+
